@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import './login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 4)).then((value) {
-      // Navigator.of(context).pushReplacement(newRoute)
+      Navigator.of(context).pushReplacementNamed(LogInScreen.routeName);
     });
   }
 
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 50,
             ),
             SpinKitSquareCircle(
-              color: Colors.orange,
+              color: Color.fromARGB(223, 222, 31, 10),
               size: 50.0,
 
               // ThreeInOut()
