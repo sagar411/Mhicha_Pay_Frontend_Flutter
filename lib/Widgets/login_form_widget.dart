@@ -1,6 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import '../Screens/signup_screen.dart';
+import '../Providers/auth.dart';
+import '../Screens/profile_screen.dart';
+import '../Models/shared_data.dart';
 
 class LoginFormWidget extends StatefulWidget {
   const LoginFormWidget({super.key});
@@ -20,16 +22,27 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   final _passwordController = TextEditingController();
   bool _passwordVisible = true;
 
-  void _submit() async {
+  Future<void> _submit() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Processing')),
-    );
     _formKey.currentState!.save();
+
+    try {
+      await Auth.authenticate(_emailController.text, _passwordController.text)
+          .then((value) {
+        if (SharedData.token.isNotEmpty && SharedData.userId.isNotEmpty) {
+          Navigator.of(context).pushNamed(ProfileScreen.routeName);
+        } else {
+          print("sorry couldn't login");
+        }
+      });
+    } catch (error) {
+      print("Error");
+      print(error);
+    }
   }
 
   @override
@@ -131,7 +144,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 EdgeInsets.all(16),
               ), // Set the padding
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(SignupScreen.routeName);
+            },
             child: Text(
               "SignUp",
               style: TextStyle(fontSize: 15, color: Colors.black),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Widgets/login_form_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LogInScreen extends StatelessWidget {
   static const routeName = "/login-screen";
@@ -10,18 +11,15 @@ class LogInScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(25),
+          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
           child: Column(
             children: const <Widget>[
-              SizedBox(
-                height: 10,
-              ),
               Align(
                 alignment: Alignment.center,
                 child: Image(
                   image: AssetImage("assets/images/icon1.png"),
-                  width: 200,
-                  height: 200,
+                  width: 170,
+                  height: 170,
                 ),
               ),
               Align(
@@ -30,22 +28,20 @@ class LogInScreen extends StatelessWidget {
                   "Welcome to MhichaPay!",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500),
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  "Login to Continue!",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15,
-                  ),
-                ),
+                child: Text("Login to Continue!",
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 20,
+                        color: Colors.grey)),
               ),
               SizedBox(
                 height: 25,
