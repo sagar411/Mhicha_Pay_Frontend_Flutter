@@ -39,6 +39,7 @@ class Auth {
         ),
         headers: header,
       );
+      print(response.statusCode);
       var jsonData = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -56,12 +57,13 @@ class Auth {
         await prefs.setBool('kyc', jsonData['user']['kyc']);
         await prefs.setString('role', jsonData['user']['role']);
       } else {
-        return Future.error('Invalid email or password!');
+        return Future.error(jsonData['error']['message']);
       }
     } on SocketException {
       return Future.error('No internet connection');
     } catch (err) {
-      return Future.error(err.toString());
+      //  var jsonData = jsonDecode(err);
+      throw err;
     }
   }
 }

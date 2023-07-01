@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'Screens/splash_screen.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/signup_screen.dart';
-import 'Screens/profile_screen.dart';
+import 'Screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LogInScreen.routeName: (ctx) => LogInScreen(),
         SignupScreen.routeName: (ctx) => SignupScreen(),
-        ProfileScreen.routeName: (ctx) => ProfileScreen()
+        MainScreen.routeName: (ctx) => MainScreen()
       },
       home: SplashScreen(),
     );

@@ -3,9 +3,9 @@ import '../Models/shared_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Widgets/balance_widget.dart';
 
-class ProfileScreen extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   static final routeName = "/profile";
-  const ProfileScreen({super.key});
+  const MainScreen({super.key});
   String getFirstName(String fullname) {
     int spaceIndex = fullname.indexOf(' ');
     if (spaceIndex != -1) {
@@ -49,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: BalanceWidget(),
-            )
+            ),
           ],
         ),
       ),

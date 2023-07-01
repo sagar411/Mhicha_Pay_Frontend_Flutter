@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../Screens/signup_screen.dart';
 import '../Providers/auth.dart';
@@ -35,13 +37,29 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           .then((value) {
         if (SharedData.token.isNotEmpty && SharedData.userId.isNotEmpty) {
           Navigator.of(context).pushNamed(ProfileScreen.routeName);
-        } else {
-          print("sorry couldn't login");
         }
       });
+    } on SocketException {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "No Internet Connection",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      );
     } catch (error) {
-      print("Error");
       print(error);
+      // print(error['error']['message']);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            error.toString(),
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      );
     }
   }
 
