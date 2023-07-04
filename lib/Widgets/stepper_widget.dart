@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mhicha_pay_flutter/Models/shared_data.dart';
+import 'package:mhicha_pay_flutter/Providers/auth.dart';
 import '../Widgets/signup_submit_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../Screens/main_screen.dart';
 
 class SteppersWidget extends StatefulWidget {
   // final Final
@@ -13,6 +17,44 @@ class SteppersWidget extends StatefulWidget {
 }
 
 class _SteppersWidgetState extends State<SteppersWidget> {
+  final GlobalKey<FormState> _formKeySignup = GlobalKey();
+
+  final thirdStepNameController = TextEditingController();
+  final thirdStepPasswordController = TextEditingController();
+  final thirdStepMpinController = TextEditingController();
+
+  void thirdStepsubmit() async {
+    final isValid = _formKeySignup.currentState!.validate();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (!isValid) {
+      return;
+    }
+    try {
+      await Auth.finalSubmit(
+        thirdStepNameController.text,
+        SharedData.email,
+        thirdStepPasswordController.text,
+        thirdStepMpinController.text,
+      ).then((value) => {
+            if (SharedData.token.isNotEmpty || SharedData.userId.isNotEmpty)
+              {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                    "Account Created Successfully",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                )),
+                Navigator.of(context).pushNamed(MainScreen.routeName)
+              }
+          });
+    } catch (error) {
+      await ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
+    }
+
+    _formKeySignup.currentState!.save();
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   List<TextEditingController> otpControllers =
@@ -20,6 +62,7 @@ class _SteppersWidgetState extends State<SteppersWidget> {
   Map<String, String> _authData = {
     "email": " ",
   };
+  int statusCode = 0;
   //email
   int _currentStep = 0;
   final emailController = TextEditingController();
@@ -55,18 +98,32 @@ class _SteppersWidgetState extends State<SteppersWidget> {
     _timer?.cancel();
   }
 
-  void _submit() async {
+//email valid step1
+  Future<void> _submit() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
-    }
-    setState(() {
-      formValidate = true;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Otp had been sent to ${emailController.text}")));
+    } else {
+      setState(() {
+        formValidate = true;
+      });
+      _formKey.currentState!.save();
 
-    _formKey.currentState!.save();
+      try {
+        await Auth.sendOTP(emailController.text).then((value) {
+          setState(() {
+            statusCode = value;
+          });
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Otp had been sent to ${emailController.text}"),
+        ));
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.toString()),
+        ));
+      }
+    }
   }
 
   String getOtpValue() {
@@ -77,18 +134,38 @@ class _SteppersWidgetState extends State<SteppersWidget> {
     return otpValue;
   }
 
-  void _submitOtp() {
+//otp verify step-2
+  Future<void> _submitOtp() async {
     String otpValue = getOtpValue();
-    if (otpValue.isNotEmpty) {
-      setState(() {
-        otpCheck = true;
-      });
-    }
-    for (var controller in otpControllers) {
-      controller.clear();
-    }
+    // print("otp Vlue");
+    // print(otpValue);
 
-    print(otpValue);
+    try {
+      if (otpValue.isNotEmpty) {
+        // print("here");
+        await Auth.checkOtpValidation(SharedData.email, otpValue).then((value) {
+          if (value) {
+            setState(() {
+              otpCheck = true;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                "Otp Verified",
+                style: TextStyle(color: Colors.green),
+              ),
+            ));
+          }
+          ;
+        });
+      }
+    } catch (error) {
+      var newErr = await error;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(newErr as String),
+        ),
+      );
+    }
   }
 
   cancelStep() {
@@ -100,32 +177,38 @@ class _SteppersWidgetState extends State<SteppersWidget> {
     // if (_currentStep < 0) {}
   }
 
-  continueStep() {
+  continueStep() async {
     if (_currentStep == 0) {
-      _submit();
-      if (!formValidate) {
-        return;
-      } else {
-        setState(() {
-          _currentStep++;
-        });
-        _startTimer();
-      }
+      _submit().then((value) {
+        if (statusCode == 200 || statusCode == 201) {
+          if (!formValidate) {
+            return;
+          } else {
+            setState(() {
+              print(_currentStep);
+              _currentStep++;
+            });
+            _startTimer();
+          }
+        } else {
+          return;
+        }
+      });
     } else if (_currentStep == 1) {
-      _submitOtp();
-      if (!otpCheck) {
-        return;
-      } else {
-        setState(() {
-          _currentStep++;
-        });
-      }
-
-      // setState(() {
-      //   _currentStep++;
-      // });
+      await _submitOtp().then((value) {
+        if (!otpCheck) {
+          return;
+        } else {
+          setState(() {
+            _currentStep++;
+          });
+          for (var controller in otpControllers) {
+            controller.clear();
+          }
+        }
+      });
     } else if (_currentStep == 2) {
-      setState(() {});
+      thirdStepsubmit();
     }
   }
 
@@ -383,7 +466,12 @@ class _SteppersWidgetState extends State<SteppersWidget> {
             state: _currentStep >= 1 ? StepState.complete : StepState.disabled),
         Step(
           title: Text("Submit Form"),
-          content: SignupFormSubmit(),
+          content: SignupFormSubmit(
+            nameController: thirdStepNameController,
+            passwordController: thirdStepPasswordController,
+            mpinController: thirdStepMpinController,
+            formKey: _formKeySignup,
+          ),
           isActive: _currentStep >= 2,
           state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
         ),

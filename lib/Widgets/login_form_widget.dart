@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../Screens/signup_screen.dart';
 import '../Providers/auth.dart';
-import '../Screens/profile_screen.dart';
+import '../Screens/main_screen.dart';
 import '../Models/shared_data.dart';
 
 class LoginFormWidget extends StatefulWidget {
@@ -36,7 +36,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       await Auth.authenticate(_emailController.text, _passwordController.text)
           .then((value) {
         if (SharedData.token.isNotEmpty && SharedData.userId.isNotEmpty) {
-          Navigator.of(context).pushNamed(ProfileScreen.routeName);
+          Navigator.of(context).pushNamed(MainScreen.routeName);
         }
       });
     } on SocketException {

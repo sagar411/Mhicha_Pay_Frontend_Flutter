@@ -3,36 +3,33 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class SignupFormSubmit extends StatefulWidget {
-  const SignupFormSubmit({super.key});
+  final TextEditingController nameController;
+  final TextEditingController passwordController;
+  final TextEditingController mpinController;
+  final GlobalKey formKey;
+  SignupFormSubmit(
+      {required this.nameController,
+      required this.passwordController,
+      required this.mpinController,
+      required this.formKey});
 
   @override
   State<SignupFormSubmit> createState() => SignupFormSubmitState();
 }
 
 class SignupFormSubmitState extends State<SignupFormSubmit> {
-  final GlobalKey<FormState> _fromKey = GlobalKey();
-  Map<String, String> _authData = {"name": "", "password": "", "mpin": ""};
-  final _nameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _mpinController = TextEditingController();
+  Map<String, String> _authData = {
+    "name": "",
+    "password": "",
+    "mpin": "",
+  };
+
   bool _pwvisible = true;
-
-  void _submit() async {
-    final isValid = _fromKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    _fromKey.currentState!.save();
-  }
-
-  Function get submitForm {
-    return _submit;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _fromKey,
+        key: widget.formKey,
         child: Column(
           children: [
             TextFormField(
@@ -43,7 +40,7 @@ class SignupFormSubmitState extends State<SignupFormSubmit> {
                 ),
               ),
               keyboardType: TextInputType.visiblePassword,
-              controller: _nameController,
+              controller: widget.nameController,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Enter your name";
@@ -76,7 +73,7 @@ class SignupFormSubmitState extends State<SignupFormSubmit> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _pwvisible,
-              controller: _passwordController,
+              controller: widget.passwordController,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Password field should not be empty";
@@ -100,7 +97,7 @@ class SignupFormSubmitState extends State<SignupFormSubmit> {
                 ),
               ),
               keyboardType: TextInputType.number,
-              controller: _mpinController,
+              controller: widget.mpinController,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "mpin shlould not be empty";

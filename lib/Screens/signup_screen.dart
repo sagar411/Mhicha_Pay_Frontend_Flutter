@@ -13,23 +13,25 @@ class SignupScreen extends StatelessWidget {
         body: Container(
       height: double.infinity,
       width: double.infinity,
-      child: Column(children: <Widget>[
-        SizedBox(
-          height: 20,
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Image(
-            image: AssetImage("assets/images/icon2.png"),
-            height: 70,
-            width: 70,
+      child: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          SizedBox(
+            height: 20,
           ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        SizedBox(height: 360, child: SteppersWidget())
-      ]),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Image(
+              image: AssetImage("assets/images/icon2.png"),
+              height: 70,
+              width: 70,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(height: 500, child: SteppersWidget())
+        ]),
+      ),
     ));
   }
 }
