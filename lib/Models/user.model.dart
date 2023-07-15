@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class UserModel {
-  String id;
   String name;
   String email;
-  String? role;
+  String role;
   String mpin;
-  double balance;
+  int balance;
+  int sapati;
+  int saving;
+
   bool kyc;
 
   UserModel(
-      {required this.id,
-      required this.name,
+      {required this.name,
       required this.email,
-      this.role,
+      required this.role,
       required this.mpin,
       required this.balance,
+      required this.sapati,
+      required this.saving,
       required this.kyc});
 }

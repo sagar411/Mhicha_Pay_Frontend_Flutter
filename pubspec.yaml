@@ -40,6 +40,8 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   shared_preferences: ^2.2.0
   google_fonts: ^4.0.4
+  provider: ^6.0.5
+  web_socket_channel: ^2.4.0
 
 flutter_icons:
   android: true
@@ -75,6 +77,10 @@ flutter:
   assets:
     - assets/images/icon1.png
     - assets/images/icon2.png
+    - assets/images/money.png
+    - assets/images/send.png
+    - assets/images/piggy.png
+    - assets/images/costs.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

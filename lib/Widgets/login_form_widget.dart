@@ -5,6 +5,8 @@ import '../Screens/signup_screen.dart';
 import '../Providers/auth.dart';
 import '../Screens/main_screen.dart';
 import '../Models/shared_data.dart';
+import 'package:provider/provider.dart';
+import '../Providers/user.provider.dart';
 
 class LoginFormWidget extends StatefulWidget {
   const LoginFormWidget({super.key});
@@ -34,9 +36,13 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
     try {
       await Auth.authenticate(_emailController.text, _passwordController.text)
-          .then((value) {
+          .then((value) async {
         if (SharedData.token.isNotEmpty && SharedData.userId.isNotEmpty) {
-          Navigator.of(context).pushNamed(MainScreen.routeName);
+          await Provider.of<UserProvider>(context, listen: false)
+              .userData()
+              .then((value) {
+            Navigator.of(context).pushNamed(MainScreen.routeName);
+          });
         }
       });
     } on SocketException {

@@ -34,6 +34,7 @@ class Auth {
         SharedData.name = resData['user']['name'];
         SharedData.role = resData['user']['role'];
         SharedData.balance = resData['user']['balance'];
+        
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', resData['token']);

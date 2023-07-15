@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../Widgets/login_form_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LogInScreen extends StatelessWidget {
   static const routeName = "/login-screen";

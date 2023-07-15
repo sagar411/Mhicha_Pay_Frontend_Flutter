@@ -5,6 +5,8 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavBar();
+    return BottomNavBar(
+      key: key,
+    );
   }
 }
