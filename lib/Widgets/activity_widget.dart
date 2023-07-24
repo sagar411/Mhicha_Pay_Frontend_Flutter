@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Screens/sendmoney.screen.dart';
 
 class ActivityWidget extends StatelessWidget {
   const ActivityWidget({super.key});
@@ -13,7 +14,7 @@ class ActivityWidget extends StatelessWidget {
         InkWell(
           onHover: (value) {},
           onTap: () {
-            print("Hello world");
+            Navigator.of(context).pushNamed(SendMoneyScreen.routeName);
           },
           child: Container(
             padding: EdgeInsets.all(5),
@@ -35,9 +36,7 @@ class ActivityWidget extends StatelessWidget {
           width: 20,
         ),
         InkWell(
-          onTap: () {
-            print("Hello world");
-          },
+          onTap: () {},
           child: Container(
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
@@ -58,9 +57,7 @@ class ActivityWidget extends StatelessWidget {
           width: 20,
         ),
         InkWell(
-          onTap: () {
-            print("Hello world");
-          },
+          onTap: () {},
           child: Container(
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(

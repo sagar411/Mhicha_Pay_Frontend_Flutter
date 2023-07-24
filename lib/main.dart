@@ -6,6 +6,8 @@ import 'Screens/signup_screen.dart';
 import 'Screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'Screens/sendmoney.screen.dart';
+import 'Screens/sendmoney_process.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
         routes: {
           LogInScreen.routeName: (ctx) => LogInScreen(),
           SignupScreen.routeName: (ctx) => SignupScreen(),
-          MainScreen.routeName: (ctx) => MainScreen()
+          MainScreen.routeName: (ctx) => MainScreen(),
+          SendMoneyScreen.routeName: (ctx) => SendMoneyScreen(),
+          SendMoneyProcess.routeName: (ctx) => SendMoneyProcess()
         },
         home: SplashScreen(),
       ),

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class UserModel {
   String name;
   String email;
@@ -11,13 +9,14 @@ class UserModel {
 
   bool kyc;
 
-  UserModel(
-      {required this.name,
-      required this.email,
-      required this.role,
-      required this.mpin,
-      required this.balance,
-      required this.sapati,
-      required this.saving,
-      required this.kyc});
+  UserModel({
+    required this.name,
+    required this.email,
+    required this.role,
+    required this.mpin,
+    required this.balance,
+    required this.sapati,
+    required this.saving,
+    required this.kyc,
+  });
 }

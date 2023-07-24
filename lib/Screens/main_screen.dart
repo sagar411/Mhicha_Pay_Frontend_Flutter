@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Providers/user.provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +15,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late Timer _timer;
+  // late Timer _timer;
   @override
   void initState() {
     // TODO: implement initState
@@ -36,11 +34,11 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
               alignment: Alignment.topLeft,
               child: BalanceWidget(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ActivityWidget()

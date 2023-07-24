@@ -96,7 +96,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               _authData['email'] = value as String;
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
