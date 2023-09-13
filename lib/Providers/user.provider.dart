@@ -17,7 +17,7 @@ class UserProvider with ChangeNotifier {
 
   static Future<void> fetchUserByEmail(String email) async {
     Map<String, String> headers = {
-      "Content-type": "appication/json",
+      "Content-type": "application/json",
       "authorization": "Bearer ${SharedData.token}"
     };
 

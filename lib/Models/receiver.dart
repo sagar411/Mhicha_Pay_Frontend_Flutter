@@ -4,4 +4,6 @@ class ReceiverData {
   static String ReceiverEmail = '';
   static String Transferamount = '';
   static String Transferremarks = '';
+  static String Mpin = '';
+  static String TransferPurpose = '';
 }

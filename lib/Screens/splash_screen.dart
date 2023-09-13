@@ -14,9 +14,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 4)).then((value) {
-      Navigator.of(context).pushReplacementNamed(LogInScreen.routeName);
-    });
+    Future.delayed(const Duration(seconds: 4)).then(
+      (value) {
+        Navigator.of(context).pushReplacementNamed(LogInScreen.routeName);
+      },
+    );
   }
 
   @override
@@ -26,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const <Widget>[
             Image(
               image: AssetImage("assets/images/icon1.png"),
               width: 250,

@@ -1,5 +1,4 @@
 import "dart:io";
-
 import "package:flutter/material.dart";
 import "package:mhicha_pay_flutter/Models/receiver.dart";
 import "package:mhicha_pay_flutter/Providers/user.provider.dart";
@@ -26,13 +25,14 @@ class _SendMoneyFormWidgetState extends State<SendMoneyFormWidget> {
         ReceiverData.ReceiverEmail = _emailController.text;
         ReceiverData.Transferamount = _amountController.text;
         ReceiverData.Transferremarks = _remarksController.text;
+        ReceiverData.TransferPurpose = purpose;
+        print(purpose);
         Navigator.of(context).pushNamed(SendMoneyProcess.routeName);
       });
     } on SocketException {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("No Internet Connection")));
     } catch (error) {
-      print("error");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           error.toString(),
