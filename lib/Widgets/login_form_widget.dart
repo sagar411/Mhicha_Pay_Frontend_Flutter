@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mhicha_pay_flutter/Screens/dashboard_screen.dart';
 import '../Screens/signup_screen.dart';
 import '../Providers/auth.dart';
 import '../Screens/main_screen.dart';
@@ -41,7 +42,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           await Provider.of<UserProvider>(context, listen: false)
               .userData()
               .then((value) {
-            Navigator.of(context).pushNamed(MainScreen.routeName);
+            Navigator.of(context).pushNamed(DashboardPage.routeName);
           });
         }
       });

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mhicha_pay_flutter/Providers/statements_provider.dart';
 import 'package:mhicha_pay_flutter/Providers/user.provider.dart';
+import 'package:mhicha_pay_flutter/Screens/dashboard_screen.dart';
+import 'package:mhicha_pay_flutter/Screens/qrscreen.dart';
+import 'package:mhicha_pay_flutter/Screens/send_money_success_page.dart';
 import 'Screens/splash_screen.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/signup_screen.dart';
@@ -24,7 +28,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => UserProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => StatementsProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -46,7 +53,12 @@ class MyApp extends StatelessWidget {
           MainScreen.routeName: (ctx) => MainScreen(),
           SendMoneyScreen.routeName: (ctx) => SendMoneyScreen(),
           SendMoneyProcess.routeName: (ctx) => SendMoneyProcess(),
-          StatementPage.routeName: (ctx) => StatementPage()
+          StatementPage.routeName: (ctx) => StatementPage(),
+          DashboardPage.routeName: (ctx) => DashboardPage(),
+          QRPage.routeName: (ctx) => QRPage(),
+          StatementPage.routeName: (ctx) => StatementPage(),
+          SendMoneyProcess.routeName: (ctx) => SendMoneyProcess(),
+          SendMoneySuccessPage.routeName: (ctx) => SendMoneySuccessPage(),
         },
         home: SplashScreen(),
       ),

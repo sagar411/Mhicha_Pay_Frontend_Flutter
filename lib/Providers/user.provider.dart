@@ -71,6 +71,8 @@ class UserProvider with ChangeNotifier {
       );
       _myDetail = userDataFetch;
       notifyListeners();
+      SharedData.email = userDataFetch.email;
+      SharedData.name = userDataFetch.name;
       // print('mero naam ${_myDetail!.name}');
     } catch (error) {
       throw error;
