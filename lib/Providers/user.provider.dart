@@ -78,4 +78,27 @@ class UserProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  Future<void> updateUserData(String name, String email) async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${SharedData.token}",
+    };
+    try {
+      Uri uri = Uri.parse("http://${Config.authority}/user/update-profile");
+      var response = await http.put(
+        uri,
+        headers: headers,
+        body: json.encode(
+          {
+            "name": name,
+          },
+        ),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Screens/main_screen.dart';
+import 'package:mhicha_pay_flutter/Screens/payments_page.dart';
+import 'package:mhicha_pay_flutter/Screens/pofile_screen.dart';
 import 'package:mhicha_pay_flutter/Screens/qrscreen.dart';
 import 'package:mhicha_pay_flutter/Screens/statementspage.dart';
 
@@ -129,9 +131,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 Expanded(
                   child: Center(
-                    child: bottomNavItem(2, 'Payments', Icons.payment, () {
+                    child: bottomNavItem(2, 'Savings', Icons.payment, () {
                       setState(() {
-                        // currentScreen = const PaymentsPage();
+                        currentScreen = const PaymentsPage();
                         currentTab = 2;
                       });
                     }),
@@ -139,11 +141,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 Expanded(
                   child: Center(
-                    child: bottomNavItem(3, 'Settings', Icons.settings, () {
+                    child: bottomNavItem(3, 'Profile', Icons.person, () {
                       setState(() {
-                        // currentScreen = SettingsPage(
-                        //   returnToPreviousFunction: returnToPreviousPage,
-                        // );
+                        currentScreen = ProfilePage();
                         currentTab = 3;
                       });
                     }),

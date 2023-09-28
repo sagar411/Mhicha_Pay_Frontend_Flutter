@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mhicha_pay_flutter/Screens/save_money_page.dart';
 import '../Screens/sendmoney.screen.dart';
 
 class ActivityWidget extends StatelessWidget {
@@ -36,7 +37,9 @@ class ActivityWidget extends StatelessWidget {
           width: 20,
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed(SaveMoneyPage.routeName);
+          },
           child: Container(
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
