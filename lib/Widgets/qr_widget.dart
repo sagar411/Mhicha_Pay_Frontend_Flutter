@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mhicha_pay_flutter/Models/shared_data.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MyQRWidget extends StatelessWidget {
@@ -62,7 +63,7 @@ class MyQRWidget extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.height * 0.25,
                   child: QrImageView(
-                    data: '1234567890',
+                    data: SharedData.email,
                     version: QrVersions.auto,
                     size: 200.0,
                   ),

@@ -48,7 +48,7 @@ class BalanceWidget extends StatelessWidget {
                 Consumer<UserProvider>(
                   builder: (context, value, _) {
                     return Text(
-                      "Rs. ${value.myDetail.balance}",
+                      "Rs. ${value.myDetail.balance.toStringAsFixed(2)}",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 26,
@@ -93,7 +93,7 @@ class BalanceWidget extends StatelessWidget {
                 Consumer<UserProvider>(
                   builder: (context, value, _) {
                     return Text(
-                      "Rs. ${value.myDetail.saving}",
+                      "Rs. ${value.myDetail.saving.toStringAsFixed(2)}",
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 26,
@@ -133,7 +133,7 @@ class BalanceWidget extends StatelessWidget {
                 Consumer<UserProvider>(
                   builder: (context, value, _) {
                     return Text(
-                      "Rs. ${value.myDetail.sapati}",
+                      "Rs. ${value.myDetail.sapati.toStringAsFixed(2)}",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 26,

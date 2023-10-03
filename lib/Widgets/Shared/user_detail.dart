@@ -44,7 +44,7 @@ class UserDetailSharedWidget extends StatelessWidget {
               ),
               Consumer<UserProvider>(builder: (context, value, child) {
                 return Text(
-                  "Rs. ${value.myDetail.balance.toString()}",
+                  "Rs. ${value.myDetail.balance.toStringAsFixed(2)}",
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 23,

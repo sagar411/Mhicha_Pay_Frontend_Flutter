@@ -1,8 +1,13 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:mhicha_pay_flutter/Models/receiver.dart';
+import 'package:mhicha_pay_flutter/Models/shared_data.dart';
+import 'package:mhicha_pay_flutter/Providers/auth.dart';
 import 'package:mhicha_pay_flutter/Screens/sendmoney.screen.dart';
 import 'package:mhicha_pay_flutter/Screens/sendmoney_process.dart';
+import 'package:mhicha_pay_flutter/Widgets/snackbars.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../Widgets/qr_widget.dart';
@@ -25,29 +30,30 @@ class _QRPageState extends State<QRPage> {
 
   bool isFlashOn = false;
 
-  Future<void> fetchUser(String userId) async {
-    // try {
-    //   await AuthService.fetchUserByEmail(userId).then(
-    //     (value) {
-    //       Navigator.pushReplacementNamed(
-    //         context,
-    //         SendMoneyPage.routeName,
-    //         arguments: {
-    //           'isDirectPay': false,
-    //           'userName': SharedService.sendToUserName,
-    //           'email': SharedService.sendToEmail,
-    //           'isVerified': SharedService.sendToVerified,
-    //         },
-    //       );
-    //     },
-    //   );
-    // } on SocketException {
-    //   Navigator.pop(context);
-    //   FlutterToasts.showNormalFlutterToast('No Internet.');
-    // } catch (e) {
-    //   Navigator.pop(context);
-    //   FlutterToasts.showNormalFlutterToast('No User found.');
-    // }
+  Future<void> fetchUser(String email) async {
+    print(email);
+    try {
+      await AuthService.fetchUserByEmail(email).then(
+        (value) {
+          Navigator.pushReplacementNamed(
+            context,
+            SendMoneyScreen1.routeName,
+            arguments: {
+              'email': ReceiverData.ReceiverEmail,
+            },
+          );
+        },
+      ).catchError((e) {
+        Navigator.pop(context);
+        SnackBars.showErrorSnackBar(context, e.toString());
+      });
+    } on SocketException {
+      Navigator.pop(context);
+      SnackBars.showErrorSnackBar(context, 'No internet connection.');
+    } catch (e) {
+      Navigator.pop(context);
+      SnackBars.showErrorSnackBar(context, 'No user found.');
+    }
   }
 
   void onQRViewCreated(QRViewController qrViewController) async {

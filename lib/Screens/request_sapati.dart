@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Models/shared_data.dart';
+import 'package:mhicha_pay_flutter/Providers/sapati.dart';
 import 'package:mhicha_pay_flutter/Providers/savings.dart';
 import 'package:mhicha_pay_flutter/Providers/user.provider.dart';
 import 'package:provider/provider.dart';
 
-class SaveMoneyPage extends StatefulWidget {
-  static String routeName = '/savemoneypage';
-  const SaveMoneyPage({super.key});
+class RequestSapatiPage extends StatefulWidget {
+  static String routeName = '/requestsapatipage';
+  const RequestSapatiPage({super.key});
 
   @override
-  State<SaveMoneyPage> createState() => _SaveMoneyPageState();
+  State<RequestSapatiPage> createState() => _SaveMoneyPageState();
 }
 
-class _SaveMoneyPageState extends State<SaveMoneyPage> {
+class _SaveMoneyPageState extends State<RequestSapatiPage> {
   TextEditingController amountController = TextEditingController();
   TextEditingController purposeContoller = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Save Money'),
+        title: Text('Request Sapati'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -45,9 +47,9 @@ class _SaveMoneyPageState extends State<SaveMoneyPage> {
                 controller: amountController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Invalid amount";
+                    return "Invalid Amount";
                   }
-                  if (int.parse(value.toString()) <= 50) {
+                  if (int.parse(value!) <= 50) {
                     return "Invalid Amount";
                   }
                   return null;
@@ -89,31 +91,29 @@ class _SaveMoneyPageState extends State<SaveMoneyPage> {
                 ),
                 onPressed: () {
                   if (!_formKey.currentState!.validate()) {
-                    print('no good');
                     return;
-                  } else {
-                    Provider.of<SavingsProvider>(
-                      context,
-                      listen: false,
-                    )
-                        .postSaving(
-                      int.parse(amountController.text),
-                      purposeContoller.text,
-                    )
-                        .then((value) {
-                      Provider.of<UserProvider>(context, listen: false)
-                          .userData();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Saving made successfully.')));
-                      Navigator.of(context).pop();
-                    }).catchError((e) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.toString())));
-                    });
                   }
+                  Provider.of<SapatiProvider>(
+                    context,
+                    listen: false,
+                  )
+                      .requestSapati(
+                    int.parse(amountController.text),
+                    purposeContoller.text,
+                  )
+                      .then((value) {
+                    Provider.of<UserProvider>(context, listen: false)
+                        .userData();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Request made successfully.')));
+                    Navigator.of(context).pop();
+                  }).catchError((e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
+                  });
                 },
                 child: const Text(
-                  "Save Money",
+                  "Request Sapati",
                   style: TextStyle(fontSize: 15),
                 ),
               ),

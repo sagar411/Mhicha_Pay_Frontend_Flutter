@@ -63,6 +63,8 @@ class SavingsProvider extends ChangeNotifier {
       if (responseData.statusCode == 200) {
         List<Saving> theSavings = [];
         for (var i in jsonData['savingsList']) {
+          print(i['purpose']);
+          print(i['paid']);
           theSavings.add(Saving(
               id: i['_id'],
               userId: i['userId'],
@@ -82,12 +84,12 @@ class SavingsProvider extends ChangeNotifier {
   }
 }
 
-class Saving {
+class Saving with ChangeNotifier {
   final String id;
   final String userId;
   final int savingAmount;
   final String purpose;
-  final bool paid;
+  bool paid;
   final int interestRate;
 
   Saving({
@@ -98,4 +100,34 @@ class Saving {
     required this.paid,
     required this.interestRate,
   });
+
+  Future<void> changePaidStatus(String savingId, String purpose) async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Authorization": "Bearer ${SharedData.token}",
+    };
+
+    Uri uri = Uri.parse("http://${Config.authority}/withdrawsaving/$savingId");
+    try {
+      var responseData = await http.post(
+        uri,
+        body: jsonEncode(
+          {
+            "purpose": purpose,
+          },
+        ),
+        headers: headers,
+      );
+      var jsonData = jsonDecode(responseData.body);
+      if (responseData.statusCode == 200) {
+        paid = !paid;
+        notifyListeners();
+      }
+      if (responseData.statusCode != 200) {
+        return Future.error(jsonData['error']['message']);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Models/receiver.dart';
 import 'package:mhicha_pay_flutter/Providers/send.dart';
+import 'package:mhicha_pay_flutter/Providers/user.provider.dart';
+import 'package:mhicha_pay_flutter/Screens/dashboard_screen.dart';
 import 'package:mhicha_pay_flutter/Screens/main_screen.dart';
+import 'package:provider/provider.dart';
 import '../Widgets/Shared/user_detail.dart';
 import '../Screens/statement_screen.dart';
 
@@ -31,8 +34,9 @@ class SendMoneyProcess extends StatelessWidget {
           ReceiverData.TransferPurpose,
           _mpinController.text,
         ).then((value) {
+          Provider.of<UserProvider>(context, listen: false).userData();
           Navigator.of(context).pushNamedAndRemoveUntil(
-              StatementPage.routeName, (route) => route.isFirst);
+              DashboardPage.routeName, (route) => route.isFirst);
         });
       } catch (error) {
         Navigator.of(context).pop();
@@ -65,7 +69,8 @@ class SendMoneyProcess extends StatelessWidget {
             color: Color.fromARGB(255, 70, 69, 69),
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                DashboardPage.routeName, (route) => false);
           },
         ),
       ),

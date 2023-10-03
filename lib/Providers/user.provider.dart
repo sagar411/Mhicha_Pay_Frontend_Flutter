@@ -15,6 +15,32 @@ class UserProvider with ChangeNotifier {
     return _myDetail!;
   }
 
+  Future<void> toggleTwoFactor() async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "authorization": "Bearer ${SharedData.token}"
+    };
+
+    Uri uri = Uri.parse("http://${Config.authority}/user/update-twofactor");
+
+    try {
+      var response = await http.put(
+        uri,
+        headers: headers,
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        _myDetail!.twofactor = !_myDetail!.twofactor;
+        notifyListeners();
+      } else {
+        // print(Future.error(resData['error']['message']));
+        return Future.error('Something went wrong.');
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static Future<void> fetchUserByEmail(String email) async {
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -45,6 +71,7 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> userData() async {
+    print(SharedData.token);
     Map<String, String> headers = {
       "Content-type": "application/json",
       "authorization": "Bearer ${SharedData.token}"
@@ -58,6 +85,7 @@ class UserProvider with ChangeNotifier {
         headers: headers,
       );
       final resData = json.decode(response.body);
+      print(resData);
       // print(resData);
       final userDataFetch = UserModel(
         name: resData['name'],
@@ -67,14 +95,16 @@ class UserProvider with ChangeNotifier {
         balance: resData['balance'],
         sapati: resData['sapati'],
         saving: resData['saving'],
-        kyc: resData['kyc'],
+        twofactor: resData['twofactor'],
       );
       _myDetail = userDataFetch;
       notifyListeners();
       SharedData.email = userDataFetch.email;
       SharedData.name = userDataFetch.name;
+      SharedData.twofactor = userDataFetch.twofactor;
       // print('mero naam ${_myDetail!.name}');
     } catch (error) {
+      print('send otp error');
       throw error;
     }
   }

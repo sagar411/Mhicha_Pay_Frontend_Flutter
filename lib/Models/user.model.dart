@@ -3,11 +3,11 @@ class UserModel {
   String email;
   String role;
   String mpin;
-  int balance;
-  int sapati;
-  int saving;
+  double balance;
+  double sapati;
+  double saving;
 
-  bool kyc;
+  bool twofactor;
 
   UserModel({
     required this.name,
@@ -17,6 +17,6 @@ class UserModel {
     required this.balance,
     required this.sapati,
     required this.saving,
-    required this.kyc,
+    required this.twofactor,
   });
 }

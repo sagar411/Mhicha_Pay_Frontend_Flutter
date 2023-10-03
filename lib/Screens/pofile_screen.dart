@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Models/shared_data.dart';
+import 'package:mhicha_pay_flutter/Providers/auth.dart';
 import 'package:mhicha_pay_flutter/Providers/user.provider.dart';
 import 'package:mhicha_pay_flutter/Screens/edit_profile_screen.dart';
 
@@ -95,6 +96,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                 SharedData.email,
                               ),
                               profileDetailBox('Your password', '*********'),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Two Factor Authentication',
+                                  ),
+                                  Consumer<UserProvider>(
+                                    builder: (context, data, child) {
+                                      return Switch(
+                                        value: data.myDetail.twofactor,
+                                        onChanged: (value) {
+                                          data.toggleTwoFactor();
+                                        },
+                                      );
+                                    },
+                                  )
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -121,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         radius: theWidth * 0.135,
                         backgroundColor: Colors.black12,
                         backgroundImage: const AssetImage(
-                          'images/profile_avatar.png',
+                          'assets/images/profile.jpg',
                         ),
                       ),
                     ),
@@ -194,23 +214,10 @@ class _ProfilePageState extends State<ProfilePage> {
               left: 30,
               child: TextButton(
                 onPressed: () async {
-                  // await Provider.of<ProfileProvider>(context, listen: false)
-                  //     .resetPasswordRequest()
-                  //     .then((value) {
-                  //   Navigator.pushNamed(context, ResetOtpPage.routeName);
-                  //   SnackBars.showNormalSnackbar(
-                  //     context,
-                  //     'Reset OTP sent successfully!!!',
-                  //   );
-                  // }).catchError((e) {
-                  //   SnackBars.showErrorSnackBar(
-                  //     context,
-                  //     e.toString(),
-                  //   );
-                  // });
+                  await AuthService.logOut(context);
                 },
                 child: const AutoSizeText(
-                  'Reset Password',
+                  'Log Out',
                   style: TextStyle(
                     fontSize: 15,
                     decoration: TextDecoration.underline,

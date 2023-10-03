@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Screens/main_screen.dart';
-import 'package:mhicha_pay_flutter/Screens/payments_page.dart';
+import 'package:mhicha_pay_flutter/Screens/savings_page.dart';
 import 'package:mhicha_pay_flutter/Screens/pofile_screen.dart';
 import 'package:mhicha_pay_flutter/Screens/qrscreen.dart';
 import 'package:mhicha_pay_flutter/Screens/statementspage.dart';
@@ -133,7 +133,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: Center(
                     child: bottomNavItem(2, 'Savings', Icons.payment, () {
                       setState(() {
-                        currentScreen = const PaymentsPage();
+                        currentScreen = const SavingsPage();
                         currentTab = 2;
                       });
                     }),

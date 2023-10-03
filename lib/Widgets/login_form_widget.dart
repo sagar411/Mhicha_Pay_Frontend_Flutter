@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mhicha_pay_flutter/Screens/admin_dashboard.dart';
+import 'package:mhicha_pay_flutter/Screens/confirm_otp_page.dart';
 import 'package:mhicha_pay_flutter/Screens/dashboard_screen.dart';
+import 'package:mhicha_pay_flutter/Screens/forgot_password_page.dart';
+import 'package:mhicha_pay_flutter/Widgets/snackbars.dart';
 import '../Screens/signup_screen.dart';
 import '../Providers/auth.dart';
 import '../Screens/main_screen.dart';
@@ -41,8 +45,27 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         if (SharedData.token.isNotEmpty && SharedData.userId.isNotEmpty) {
           await Provider.of<UserProvider>(context, listen: false)
               .userData()
-              .then((value) {
-            Navigator.of(context).pushNamed(DashboardPage.routeName);
+              .then((value) async {
+            print(SharedData.role);
+            if (SharedData.role == 'admin') {
+              Navigator.of(context).pushNamed(AdminDashboardPage.routeName);
+              return;
+            } else {
+              print(SharedData.twofactor);
+              if (SharedData.twofactor) {
+                await Auth.sendOTP1(_emailController.text).then((value) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          ConfirmOTPPage1(email: _emailController.text)));
+                  return;
+                }).catchError((e) {
+                  SnackBars.showErrorSnackBar(context, e.toString());
+                  return;
+                });
+              } else {
+                Navigator.of(context).pushNamed(DashboardPage.routeName);
+              }
+            }
           });
         }
       });
@@ -134,7 +157,12 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             alignment: Alignment.topRight,
             child: TextButton(
               onPressed: _submit,
-              child: Text("Forget Password ?"),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(ForgotPasswordPage.routeName);
+                  },
+                  child: Text("Forget Password ?")),
             ),
           ),
           ElevatedButton(

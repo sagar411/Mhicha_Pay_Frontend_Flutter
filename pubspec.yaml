@@ -90,6 +90,7 @@ flutter:
     - assets/images/send.png
     - assets/images/piggy.png
     - assets/images/costs.png
+    - assets/images/profile.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

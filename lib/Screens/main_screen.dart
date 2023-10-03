@@ -122,22 +122,31 @@ class _MainScreenState extends State<MainScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Consumer<StatementsProvider>(
-                builder: (context, statementsData, child) {
-                  return statementsData.statements.isEmpty
-                      ? const Text(
-                          'No statements available!!!.',
-                        )
-                      : Column(
-                          children:
-                              statementsData.recentStatements.map((statement) {
-                            return StatementWidget(
-                              statement: statement,
-                            );
-                          }).toList() as List<Widget>,
-                        );
-                },
-              ),
+              FutureBuilder(
+                  future:
+                      Provider.of<StatementsProvider>(context, listen: false)
+                          .getStatements('All'),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return Consumer<StatementsProvider>(
+                      builder: (context, statementsData, child) {
+                        return statementsData.statements.isEmpty
+                            ? const Text(
+                                'No statements available!!!.',
+                              )
+                            : Column(
+                                children: statementsData.recentStatements
+                                    .map((statement) {
+                                  return StatementWidget(
+                                    statement: statement,
+                                  );
+                                }).toList() as List<Widget>,
+                              );
+                      },
+                    );
+                  }),
             ],
           ),
         ),

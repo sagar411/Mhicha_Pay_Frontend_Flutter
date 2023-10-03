@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mhicha_pay_flutter/Providers/auth.dart';
 import './login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 4)).then(
       (value) {
-        Navigator.of(context).pushReplacementNamed(LogInScreen.routeName);
+        AuthService.autoLogin(context);
       },
     );
   }
