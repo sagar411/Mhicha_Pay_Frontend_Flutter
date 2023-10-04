@@ -198,9 +198,6 @@ class Auth {
     }
   }
 
-  // static Future<void> signUp(String email, String password, ){
-
-  // }
   static Future<void> authenticate(String email, String password) async {
     // print("Hello from auth!");
 

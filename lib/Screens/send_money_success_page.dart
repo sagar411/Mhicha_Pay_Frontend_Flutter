@@ -3,14 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mhicha_pay_flutter/Models/shared_data.dart';
 import 'package:mhicha_pay_flutter/Screens/dashboard_screen.dart';
 import 'package:mhicha_pay_flutter/Widgets/Shared/user_detail.dart';
-// import 'package:mhicha/models/fund_transfer_detail_model.dart';
-// import 'package:mhicha/pages/dashboard_page.dart';
-// import 'package:mhicha/providers/theme_provider.dart';
-// import 'package:mhicha/services/apis/pdf_api.dart';
-// import 'package:mhicha/services/shared_services.dart';
-// import 'package:mhicha/utilities/themes.dart';
-// import 'package:mhicha/widgets/secondary_balance_card.dart';
-// import 'package:dotted_border/dotted_border.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -18,9 +10,6 @@ import '../Models/balance.model.dart';
 import '../Widgets/secondary_balance_card.dart';
 import '../apis/pdf_api.dart';
 import '../apis/pdf_invoice_api.dart';
-// import 'package:auto_size_text/auto_size_text.dart';
-// import '../services/apis/pdf_invoice_api.dart';
-// import 'package:share/share.dart';
 
 class SendMoneySuccessPage extends StatelessWidget {
   static String routeName = '/sendMoneySuccessPage';
@@ -97,52 +86,6 @@ class SendMoneySuccessPage extends StatelessWidget {
                           Icons.share,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () async {
-                          if (isPdfDownloaded) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text('Are you Sure ?'),
-                                    content: const Text(
-                                      'Do you want to re-download the Pdf ?',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'No',
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          final pdfFile =
-                                              await PdfInvoiceApi.generate(
-                                            fundTransferDetail,
-                                          );
-                                          PdfApi.openFile(pdfFile);
-                                          isPdfDownloaded = true;
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('Yes'),
-                                      ),
-                                    ],
-                                  );
-                                });
-                            return;
-                          } else {
-                            final pdfFile = await PdfInvoiceApi.generate(
-                              fundTransferDetail,
-                            );
-                            PdfApi.openFile(pdfFile);
-                            isPdfDownloaded = true;
-                          }
-                        },
-                        icon: const Icon(Icons.picture_as_pdf_outlined),
-                      ),
                     ],
                   )
                 ],
@@ -160,9 +103,6 @@ class SendMoneySuccessPage extends StatelessWidget {
                   radius: const Radius.circular(
                     15,
                   ),
-                  // color: Provider.of<ThemeProvider>(context).isDarkMode
-                  //     ? Colors.white
-                  //     : Colors.black,
                   color: Colors.black,
                   child: Container(
                     width: double.infinity,

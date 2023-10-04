@@ -192,7 +192,7 @@ class SapatiWidget1 extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Icon(
@@ -279,7 +279,14 @@ class SapatiWidget1 extends StatelessWidget {
                     Text(
                       'Sapati Paid',
                       style: TextStyle(color: Colors.green),
-                    )
+                    ),
+                  Text(
+                    sapati.userName,
+                    // widget.statement.time,
+                    style: const TextStyle(
+                      fontSize: 11,
+                    ),
+                  ),
                 ],
               ),
             ),

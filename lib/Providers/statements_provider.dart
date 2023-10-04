@@ -143,7 +143,11 @@ class StatementsProvider with ChangeNotifier {
       var jsonData = jsonDecode(responseData.body);
       List<FundTransferModel> _loadedStatements = [];
 
-      if (responseData.statusCode == 401) {
+      if (jsonData['status']) {
+        _statements = [];
+        notifyListeners();
+        return;
+      } else if (responseData.statusCode == 401) {
         return Future.error('Something went wrong.');
       }
       for (var transaction in jsonData) {
